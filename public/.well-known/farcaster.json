@@ -1,0 +1,17 @@
+{
+    "name": "HabitGlow",
+    "description": "Gamified habit tracker with mood sharing. Built for Base and Farcaster Mini Apps.",
+    "url": "https://habitglow-app.vercel.app",
+    "icon": "https://habitglow-app.vercel.app/icon.png",
+    "requestedPermissions": ["username", "avatar"],
+    "defaultTagline": "Glow up with your daily habits ✨",
+    "theme": {
+      "primaryColor": "#FBA834",
+      "backgroundColor": "#FFFFFF"
+    },
+    "developer": {
+      "name": "Marina Yakovleva",
+      "url": "https://github.com/Ramina1388"
+    }
+  }
+  
