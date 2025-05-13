@@ -1,0 +1,14 @@
+{
+    "name": "HabitGlow",
+    "description": "Track your habits, share your mood, and glow up every day with friends.",
+    "appUrl": "http://localhost:3000", 
+    "icon": "http://localhost:3000/icon.png", 
+    "requestedPermissions": ["username", "avatar"],
+    "redirect": "http://localhost:3000",
+    "defaultTagline": "Glow up with your daily habits ✨",
+    "theme": {
+      "primaryColor": "#FBA834",
+      "backgroundColor": "#FFFFFF"
+    }
+  }
+  
