@@ -1,21 +1,7 @@
 "use client";
 
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useAccount } from "wagmi";
-import {
-  Transaction,
-  TransactionButton,
-  TransactionToast,
-  TransactionToastAction,
-  TransactionToastIcon,
-  TransactionToastLabel,
-  TransactionError,
-  TransactionResponse,
-  TransactionStatusAction,
-  TransactionStatusLabel,
-  TransactionStatus,
-} from "@coinbase/onchainkit/transaction";
-import { useNotification } from "@coinbase/onchainkit/minikit";
 
 type ButtonProps = {
   children: ReactNode;
@@ -26,7 +12,7 @@ type ButtonProps = {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   icon?: ReactNode;
-}
+};
 
 export function Button({
   children,
@@ -76,14 +62,9 @@ type CardProps = {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
-}
+};
 
-function Card({
-  title,
-  children,
-  className = "",
-  onClick,
-}: CardProps) {
+function Card({ title, children, className = "", onClick }: CardProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (onClick && (e.key === "Enter" || e.key === " ")) {
       e.preventDefault();
@@ -138,12 +119,6 @@ export function Features({ setActiveTab }: FeaturesProps) {
               Dark mode support
             </span>
           </li>
-          <li className="flex items-start">
-            <Icon name="check" className="text-[var(--app-accent)] mt-1 mr-2" />
-            <span className="text-[var(--app-foreground-muted)]">
-              OnchainKit integration
-            </span>
-          </li>
         </ul>
         <Button variant="outline" onClick={() => setActiveTab("home")}>
           Back to Home
@@ -162,7 +137,7 @@ export function Home({ setActiveTab }: HomeProps) {
     <div className="space-y-6 animate-fade-in">
       <Card title="My First Mini App">
         <p className="text-[var(--app-foreground-muted)] mb-4">
-          This is a minimalistic Mini App built with OnchainKit components.
+          This is a minimalistic Mini App prototype without blockchain logic.
         </p>
         <Button
           onClick={() => setActiveTab("features")}
@@ -173,8 +148,6 @@ export function Home({ setActiveTab }: HomeProps) {
       </Card>
 
       <TodoList />
-
-      <TransactionCard />
     </div>
   );
 }
@@ -183,7 +156,7 @@ type IconProps = {
   name: "heart" | "star" | "check" | "plus" | "arrow-right";
   size?: "sm" | "md" | "lg";
   className?: string;
-}
+};
 
 export function Icon({ name, size = "md", className = "" }: IconProps) {
   const sizeClasses = {
@@ -193,83 +166,11 @@ export function Icon({ name, size = "md", className = "" }: IconProps) {
   };
 
   const icons = {
-    heart: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <title>Heart</title>
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-      </svg>
-    ),
-    star: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <title>Star</title>
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      </svg>
-    ),
-    check: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <title>Check</title>
-        <polyline points="20 6 9 17 4 12" />
-      </svg>
-    ),
-    plus: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <title>Plus</title>
-        <line x1="12" y1="5" x2="12" y2="19" />
-        <line x1="5" y1="12" x2="19" y2="12" />
-      </svg>
-    ),
-    "arrow-right": (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <title>Arrow Right</title>
-        <line x1="5" y1="12" x2="19" y2="12" />
-        <polyline points="12 5 19 12 12 19" />
-      </svg>
-    ),
+    heart: <span>❤️</span>,
+    star: <span>⭐</span>,
+    check: <span>✅</span>,
+    plus: <span>➕</span>,
+    "arrow-right": <span>➡️</span>,
   };
 
   return (
@@ -283,21 +184,19 @@ type Todo = {
   id: number;
   text: string;
   completed: boolean;
-}
+};
 
 function TodoList() {
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, text: "Learn about MiniKit", completed: false },
-    { id: 2, text: "Build a Mini App", completed: true },
-    { id: 3, text: "Deploy to Base and go viral", completed: false },
+    { id: 1, text: "Learn about Mini Apps", completed: false },
+    { id: 2, text: "Build your first project", completed: true },
+    { id: 3, text: "Deploy and share", completed: false },
   ]);
   const [newTodo, setNewTodo] = useState("");
 
   const addTodo = () => {
     if (newTodo.trim() === "") return;
-
-    const newId =
-      todos.length > 0 ? Math.max(...todos.map((t) => t.id)) + 1 : 1;
+    const newId = todos.length > 0 ? Math.max(...todos.map((t) => t.id)) + 1 : 1;
     setTodos([...todos, { id: newId, text: newTodo, completed: false }]);
     setNewTodo("");
   };
@@ -315,9 +214,7 @@ function TodoList() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      addTodo();
-    }
+    if (e.key === "Enter") addTodo();
   };
 
   return (
@@ -366,7 +263,9 @@ function TodoList() {
                 </button>
                 <label
                   htmlFor={`todo-${todo.id}`}
-                  className={`text-[var(--app-foreground-muted)] cursor-pointer ${todo.completed ? "line-through opacity-70" : ""}`}
+                  className={`text-[var(--app-foreground-muted)] cursor-pointer ${
+                    todo.completed ? "line-through opacity-70" : ""
+                  }`}
                 >
                   {todo.text}
                 </label>
@@ -381,81 +280,6 @@ function TodoList() {
             </li>
           ))}
         </ul>
-      </div>
-    </Card>
-  );
-}
-
-
-function TransactionCard() {
-  const { address } = useAccount();
-
-  // Example transaction call - sending 0 ETH to self
-  const calls = useMemo(() => address
-    ? [
-        {
-          to: address,
-          data: "0x" as `0x${string}`,
-          value: BigInt(0),
-        },
-      ]
-    : [], [address]);
-
-  const sendNotification = useNotification();
-
-  const handleSuccess = useCallback(async (response: TransactionResponse) => {
-    const transactionHash = response.transactionReceipts[0].transactionHash;
-
-    console.log(`Transaction successful: ${transactionHash}`);
-
-    await sendNotification({
-      title: "Congratulations!",
-      body: `You sent your a transaction, ${transactionHash}!`,
-    });
-  }, [sendNotification]);
-
-  return (
-    <Card title="Make Your First Transaction">
-      <div className="space-y-4">
-        <p className="text-[var(--app-foreground-muted)] mb-4">
-          Experience the power of seamless sponsored transactions with{" "}
-          <a
-            href="https://onchainkit.xyz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#0052FF] hover:underline"
-          >
-            OnchainKit
-          </a>
-          .
-        </p>
-
-        <div className="flex flex-col items-center">
-          {address ? (
-            <Transaction
-              calls={calls}
-              onSuccess={handleSuccess}
-              onError={(error: TransactionError) =>
-                console.error("Transaction failed:", error)
-              }
-            >
-              <TransactionButton className="text-white text-md" />
-              <TransactionStatus>
-                <TransactionStatusAction />
-                <TransactionStatusLabel />
-              </TransactionStatus>
-              <TransactionToast className="mb-4">
-                <TransactionToastIcon />
-                <TransactionToastLabel />
-                <TransactionToastAction />
-              </TransactionToast>
-            </Transaction>
-          ) : (
-            <p className="text-yellow-400 text-sm text-center mt-2">
-              Connect your wallet to send a transaction
-            </p>
-          )}
-        </div>
       </div>
     </Card>
   );
