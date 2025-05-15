@@ -43,6 +43,9 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="farcaster:frame" content="vNext" />
+        <meta property="og:title" content="HabitGlow" />
+        <meta property="og:description" content="Gamified habit tracker with mood sharing." />
+        <meta property="og:image" content="https://habitglow-app.vercel.app/preview.png" />
       </head>
       <body className="bg-background flex justify-center">
         <div className="w-full max-w-[420px]">
