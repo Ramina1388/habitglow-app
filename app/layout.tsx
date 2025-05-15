@@ -1,5 +1,5 @@
 import './theme.css';
-// import '@coinbase/onchainkit/styles.css';
+import '@coinbase/onchainkit/styles.css';
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Providers } from './providers';
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
             name: process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
             url: URL,
             splashImageUrl: process.env.NEXT_PUBLIC_SPLASH_IMAGE_URL,
-            splashBackgroundColor: `#${process.env.NEXT_PUBLIC_SPLASH_BACKGROUND_COLOR}`,
+            splashBackgroundColor: process.env.NEXT_PUBLIC_SPLASH_BACKGROUND_COLOR,
           },
         },
       }),

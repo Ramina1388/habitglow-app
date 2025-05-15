@@ -1,9 +1,5 @@
 {
-  "accountAssociation": {
-    "header": "",
-    "payload": "",
-    "signature": ""
-  },
+ "requestedPermissions": ["username", "avatar"],
   "frame": {
     "version": "1",
     "name": "HabitGlow",
@@ -14,7 +10,6 @@
     "splashImageUrl": "https://habitglow-app.vercel.app/icon.png",
     "splashBackgroundColor": "#ECE4D9",
     "webhookUrl": "https://habitglow-app.vercel.app/api/webhook",
-    "requestedPermissions": ["username", "avatar"],
     "developer": {
       "name": "Marina Yakovleva",
       "url": "https://github.com/Ramina1388"
