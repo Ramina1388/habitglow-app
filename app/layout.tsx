@@ -41,6 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="farcaster:frame" content="vNext" />
+      </head>
       <body className="bg-background flex justify-center">
         <div className="w-full max-w-[420px]">
           <Providers>{children}</Providers>
