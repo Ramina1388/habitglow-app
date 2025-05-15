@@ -1,17 +1,24 @@
 {
-    "version": "vNext",
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
     "name": "HabitGlow",
-    "description": "Gamified habit tracker with mood sharing. Built for Base and Farcaster Mini Apps.",
     "iconUrl": "https://habitglow-app.vercel.app/icon.png",
     "homeUrl": "https://habitglow-app.vercel.app",
     "imageUrl": "https://habitglow-app.vercel.app/preview.png",
     "buttonTitle": "Start your glow",
     "splashImageUrl": "https://habitglow-app.vercel.app/icon.png",
     "splashBackgroundColor": "#ECE4D9",
+    "webhookUrl": "https://habitglow-app.vercel.app/api/webhook",
     "requestedPermissions": ["username", "avatar"],
     "developer": {
       "name": "Marina Yakovleva",
       "url": "https://github.com/Ramina1388"
     }
-  }   
-  
+  }
+}
+ 
