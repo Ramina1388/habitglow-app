@@ -1,3 +1,4 @@
+// ✅ app/providers.tsx
 "use client";
 
 import { ReactNode } from "react";
@@ -12,8 +13,6 @@ import {
   getDefaultWallets,
 } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
-
-// MiniKitProvider import removed
 
 const base = {
   id: 8453,
@@ -44,7 +43,7 @@ const { chains, provider } = configureChains([base], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: "HabitGlow",
-  projectId: "demo", // ✅ required for WalletConnect in RainbowKit
+  projectId: "demo",
   chains,
 });
 
@@ -57,10 +56,7 @@ const wagmiClient = createClient({
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        {/* Removed MiniKitProvider to prevent overwriting farcaster.json */}
-        {children}
-      </RainbowKitProvider>
+      <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
     </WagmiConfig>
   );
 }
