@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import * as sdk from '@farcaster/frame-sdk';
+import { sdk } from '@farcaster/frame-sdk';
 import TabBar from '@/components/TabBar';
 import { quotes } from '@/lib/quotes';
 
