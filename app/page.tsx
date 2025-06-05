@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import * as sdk from '@farcaster/frame-sdk';
 import TabBar from '@/components/TabBar';
 import { quotes } from '@/lib/quotes';
 
@@ -85,6 +86,12 @@ export default function Home() {
     }, 1000);
     return () => clearInterval(interval);
   }, [timeLeft]);
+
+  useEffect(() => {
+    if (!loading) {
+      sdk.actions.ready();
+    }
+  }, [loading]);
 
   const handleCheckin = () => {
     const todayStr = new Date().toISOString().slice(0, 10);

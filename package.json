@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@coinbase/onchainkit": "^0.38.13",
-    "@farcaster/frame-sdk": "^0.0.35",
+    "@farcaster/frame-sdk": "^0.0.55",
     "@neynar/nodejs-sdk": "^2.44.0",
     "@rainbow-me/rainbowkit": "^0.12.18",
     "@tanstack/react-query": "^5",
