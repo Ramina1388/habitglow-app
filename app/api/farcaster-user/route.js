@@ -19,12 +19,13 @@ export async function GET(req) {
     return NextResponse.json({ error: "Missing fid" }, { status: 400 });
   }
   try {
-    const { result } = await client.lookupUserByFid(fid);
+    const response = await client.user().getUserByFid(fid);
+    // Теперь достаем нужные данные из структуры
     return NextResponse.json({
-      pfpUrl: result.user.pfp.url,
-      username: result.user.username,
-      displayName: result.user.display_name,
-      bio: result.user.profile.bio.text
+      pfpUrl: response.result.user.pfp_url,
+      username: response.result.user.username,
+      displayName: response.result.user.display_name,
+      bio: response.result.user.profile.bio.text
     });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
