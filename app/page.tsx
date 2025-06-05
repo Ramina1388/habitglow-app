@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import TabBar from '@/components/TabBar';
 import { quotes } from '@/lib/quotes';
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const moodColors = [
   { color: '#FFD700', label: 'Joy' },
@@ -23,7 +22,7 @@ export default function Home() {
   const [selectedColor, setSelectedColor] = useState('');
   const [timeLeft, setTimeLeft] = useState(0);
   const [avatarUrl, setAvatarUrl] = useState('');
-
+  const [fid, setFid] = useState('');
   const today = new Date().getDate();
   const quote = quotes[today % quotes.length];
 
@@ -34,9 +33,9 @@ export default function Home() {
     const lastDate = localStorage.getItem('lastCheckinDate');
     const storedMood = localStorage.getItem('moodColor') || '';
     const moodTimestamp = parseInt(localStorage.getItem('moodTimestamp') || '0', 10);
-    const today = new Date().toISOString().slice(0, 10);
+    const todayStr = new Date().toISOString().slice(0, 10);
 
-    if (lastDate === today) setCheckedToday(true);
+    if (lastDate === todayStr) setCheckedToday(true);
     setStreak(storedStreak);
     setPoints(storedPoints);
     setSelectedColor(storedMood);
@@ -48,18 +47,32 @@ export default function Home() {
 
     try {
       const frameContext = (window as any)?.frame?.context;
+      if (frameContext?.user?.fid) {
+        setFid(frameContext.user.fid);
+      }
       if (frameContext?.user?.pfpUrl) {
         setAvatarUrl(frameContext.user.pfpUrl);
       }
-    } catch (e) {}
+    } catch {}
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
+    if (fid) {
+      fetch(`/api/farcaster-user?fid=${fid}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.pfpUrl) setAvatarUrl(data.pfpUrl);
+        })
+        .catch(() => {});
+    }
+  }, [fid]);
+
+  useEffect(() => {
     if (timeLeft <= 0) return;
     const interval = setInterval(() => {
-      setTimeLeft((prev) => {
+      setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(interval);
           localStorage.removeItem('moodColor');
@@ -74,9 +87,9 @@ export default function Home() {
   }, [timeLeft]);
 
   const handleCheckin = () => {
-    const today = new Date().toISOString().slice(0, 10);
+    const todayStr = new Date().toISOString().slice(0, 10);
     const lastDate = localStorage.getItem('lastCheckinDate');
-    if (lastDate === today) {
+    if (lastDate === todayStr) {
       alert('You already checked in today!');
       return;
     }
@@ -85,7 +98,7 @@ export default function Home() {
     setStreak(newStreak);
     setPoints(newPoints);
     setCheckedToday(true);
-    localStorage.setItem('lastCheckinDate', today);
+    localStorage.setItem('lastCheckinDate', todayStr);
     localStorage.setItem('streakCount', newStreak.toString());
     localStorage.setItem('habitPoints', newPoints.toString());
     alert('Day started! +10 points earned!');
@@ -197,19 +210,6 @@ export default function Home() {
             </li>
           </ul>
         </div>
-
-        {/* Connect Wallet button temporarily disabled */}
-        {/*
-        <div className="flex justify-center mt-10">
-          <div className="border-2 border-[#553414] text-[#553414] px-6 py-2 rounded-full bg-transparent hover:bg-[#553414]/10 transition">
-            <ConnectButton
-              showBalance={false}
-              accountStatus="address"
-              chainStatus="icon"
-            />
-          </div>
-        </div>
-        */}
       </main>
 
       {showInfo && (
