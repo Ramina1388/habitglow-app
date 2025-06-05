@@ -49,10 +49,19 @@ export default function Home() {
 
     try {
       const frameContext = (window as any)?.frame?.context;
-      if (frameContext?.user?.pfpUrl) {
-        setAvatarUrl(frameContext.user.pfpUrl);
+      const fid = frameContext?.user?.fid;
+      if (fid) {
+        fetch(`/api/pfp?fid=${fid}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.pfpUrl) {
+              setAvatarUrl(data.pfpUrl);
+            }
+          });
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error('Failed to load pfp', e);
+    }
 
     sdk.actions.ready();
 
@@ -201,14 +210,13 @@ export default function Home() {
           </ul>
         </div>
 
-        <div className="flex justify-center mt-10">
-          <div className="border-2 border-[#553414] text-[#553414] px-6 py-2 rounded-full bg-transparent hover:bg-[#553414]/10 transition">
-            <ConnectButton
-              showBalance={false}
-              accountStatus="address"
-              chainStatus="icon"
-            />
-          </div>
+        {/* Hidden WalletConnect Button */}
+        <div className="hidden">
+          <ConnectButton
+            showBalance={false}
+            accountStatus="address"
+            chainStatus="icon"
+          />
         </div>
       </main>
 
