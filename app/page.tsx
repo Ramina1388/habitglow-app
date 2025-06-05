@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { sdk } from '@farcaster/frame-sdk';
 import TabBar from '@/components/TabBar';
 import { quotes } from '@/lib/quotes';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const moodColors = [
   { color: '#FFD700', label: 'Joy' },
@@ -53,8 +52,6 @@ export default function Home() {
         setAvatarUrl(frameContext.user.pfpUrl);
       }
     } catch (e) {}
-
-    sdk.actions.ready();
 
     return () => clearTimeout(timer);
   }, []);
@@ -201,6 +198,8 @@ export default function Home() {
           </ul>
         </div>
 
+        {/* Connect Wallet button temporarily disabled */}
+        {/*
         <div className="flex justify-center mt-10">
           <div className="border-2 border-[#553414] text-[#553414] px-6 py-2 rounded-full bg-transparent hover:bg-[#553414]/10 transition">
             <ConnectButton
@@ -210,6 +209,7 @@ export default function Home() {
             />
           </div>
         </div>
+        */}
       </main>
 
       {showInfo && (
