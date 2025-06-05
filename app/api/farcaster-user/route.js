@@ -5,9 +5,9 @@ const config = new Configuration({
   apiKey: process.env.NEYNAR_API_KEY,
   baseOptions: {
     headers: {
-      "x-neynar-experimental": true
-    }
-  }
+      "x-neynar-experimental": true,
+    },
+  },
 });
 
 const client = new NeynarAPIClient(config);
@@ -19,13 +19,12 @@ export async function GET(req) {
     return NextResponse.json({ error: "Missing fid" }, { status: 400 });
   }
   try {
-    const response = await client.user().getUserByFid(fid);
-    // Теперь достаем нужные данные из структуры
+    const response = await client.users.getUserByFid(fid);
     return NextResponse.json({
       pfpUrl: response.result.user.pfp_url,
       username: response.result.user.username,
       displayName: response.result.user.display_name,
-      bio: response.result.user.profile.bio.text
+      bio: response.result.user.profile.bio.text,
     });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
