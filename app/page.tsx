@@ -51,11 +51,17 @@ export default function Home() {
       const frameContext = (window as any)?.frame?.context;
       const fid = frameContext?.user?.fid;
       if (fid) {
-        fetch(`/api/pfp?fid=${fid}`)
-          .then(res => res.json())
-          .then(data => {
-            if (data.pfpUrl) {
-              setAvatarUrl(data.pfpUrl);
+        fetch(`/api/pfp`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ fid }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data?.pfp_url) {
+              setAvatarUrl(data.pfp_url);
             }
           });
       }
@@ -210,7 +216,6 @@ export default function Home() {
           </ul>
         </div>
 
-        {/* Hidden WalletConnect Button */}
         <div className="hidden">
           <ConnectButton
             showBalance={false}
