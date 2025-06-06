@@ -24,9 +24,35 @@ export default function Home() {
   const [selectedColor, setSelectedColor] = useState('');
   const [timeLeft, setTimeLeft] = useState(0);
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [topHabits, setTopHabits] = useState<Record<string, number>>({});
 
   const today = new Date().getDate();
   const quote = quotes[today % quotes.length];
+
+  const fetchTopHabits = async () => {
+    try {
+      const res = await fetch('/api/top-habits');
+      const data = await res.json();
+      setTopHabits(data);
+    } catch (e) {
+      console.error('Failed to fetch top habits:', e);
+    }
+  };
+
+  const logHabit = async (habit: string) => {
+    try {
+      const frameContext = (window as any)?.frame?.context;
+      const fid = frameContext?.user?.fid;
+      if (!fid) return;
+      await fetch('/api/logHabit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fid, habit }),
+      });
+    } catch (e) {
+      console.error('Failed to log habit:', e);
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2000);
@@ -69,6 +95,7 @@ export default function Home() {
       console.error('Failed to load pfp', e);
     }
 
+    fetchTopHabits();
     sdk.actions.ready();
 
     return () => clearTimeout(timer);
@@ -106,6 +133,7 @@ export default function Home() {
     localStorage.setItem('lastCheckinDate', today);
     localStorage.setItem('streakCount', newStreak.toString());
     localStorage.setItem('habitPoints', newPoints.toString());
+    logHabit('Check-in');
     alert('Day started! +10 points earned!');
   };
 
@@ -115,6 +143,7 @@ export default function Home() {
     localStorage.setItem('moodTimestamp', Date.now().toString());
     setSelectedColor(color);
     setTimeLeft(2 * 60 * 60);
+    logHabit(`Mood: ${color}`);
     alert('Mood color saved!');
   };
 
@@ -201,18 +230,12 @@ export default function Home() {
             🌟 Most Popular Habits This Week
           </h2>
           <ul className="text-sm text-gray-700 bg-gray-200 p-3 rounded-b-lg space-y-2">
-            <li className="flex justify-between">
-              <span>🏃‍♀️ Running</span>
-              <span>128 users</span>
-            </li>
-            <li className="flex justify-between">
-              <span>📖 Reading</span>
-              <span>115 users</span>
-            </li>
-            <li className="flex justify-between">
-              <span>🧘 Meditation</span>
-              <span>97 users</span>
-            </li>
+            {Object.entries(topHabits).map(([habit, count]) => (
+              <li key={habit} className="flex justify-between">
+                <span>{habit}</span>
+                <span>{count} users</span>
+              </li>
+            ))}
           </ul>
         </div>
 
