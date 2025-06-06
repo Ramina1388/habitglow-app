@@ -24,7 +24,7 @@ export default function Home() {
   const [selectedColor, setSelectedColor] = useState('');
   const [timeLeft, setTimeLeft] = useState(0);
   const [avatarUrl, setAvatarUrl] = useState('');
-  const [topHabits, setTopHabits] = useState<Record<string, number>>({});
+  const [topHabits, setTopHabits] = useState<{ habit: string; count: number }[]>([]);
 
   const today = new Date().getDate();
   const quote = quotes[today % quotes.length];
@@ -230,12 +230,16 @@ export default function Home() {
             🌟 Most Popular Habits This Week
           </h2>
           <ul className="text-sm text-gray-700 bg-gray-200 p-3 rounded-b-lg space-y-2">
-            {Object.entries(topHabits).map(([habit, count]) => (
-              <li key={habit} className="flex justify-between">
-                <span>{habit}</span>
-                <span>{count} users</span>
-              </li>
-            ))}
+            {topHabits.length > 0 ? (
+              topHabits.map(({ habit, count }) => (
+                <li key={habit} className="flex justify-between">
+                  <span>{habit}</span>
+                  <span>{count} users</span>
+                </li>
+              ))
+            ) : (
+              <li className="text-center text-gray-500">No data yet</li>
+            )}
           </ul>
         </div>
 
