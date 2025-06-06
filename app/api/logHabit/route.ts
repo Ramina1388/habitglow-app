@@ -5,7 +5,7 @@ type HabitLog = {
   date: string;
 };
 
-let logs: Record<string, number> = {};
+const logs: Record<string, number> = {};
 
 export async function POST(req: Request) {
   try {

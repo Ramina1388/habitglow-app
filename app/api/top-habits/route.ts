@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-let habitCounts: Record<string, number> = {};
+const habitCounts: Record<string, number> = {};
 
 export async function POST(req: NextRequest) {
   try {
