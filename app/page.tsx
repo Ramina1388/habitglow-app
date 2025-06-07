@@ -7,7 +7,7 @@ import { quotes } from '@/lib/quotes';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const moodColors = [
-  { color: '#FAE588ч', label: 'Joy' },
+  { color: '#F9E79F', label: 'Joy' },
   { color: '#A2C4EC', label: 'Sadness' },
   { color: '#F4A6A6', label: 'Anger' },
   { color: '#B8E2B3', label: 'Balance' },
