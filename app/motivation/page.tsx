@@ -114,7 +114,7 @@ export default function Motivation() {
         </section>
       </main>
 
-      {/* Film Question Popup */}
+      {/* Film Popup */}
       {showFilmPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-[#FCFAF6] border border-[#D6C9B4] rounded-lg p-6 space-y-4 w-80 text-center shadow-lg relative">
@@ -124,26 +124,35 @@ export default function Motivation() {
             >
               ×
             </button>
-            <h2 className="text-md font-semibold text-[#915C48]">🎬 Quiz: {film.title}</h2>
-            <p className="text-sm text-gray-700 mb-2">What message did the film convey?</p>
-            <textarea
-              value={filmAnswer}
-              onChange={(e) => setFilmAnswer(e.target.value)}
-              className="w-full border rounded p-2 text-sm text-black"
-              rows={3}
-              placeholder="Your answer..."
-            />
-            <button
-              onClick={() => handleAnswer('film')}
-              className="px-4 py-2 bg-[#915C48] text-white rounded hover:bg-[#7a4d3d]"
-            >
-              Submit Answer
-            </button>
+            <h2 className="text-md font-semibold text-[#915C48]">🎬 {film.title}</h2>
+            <p className="text-sm text-gray-700">
+              Soon you’ll be able to earn bonus points here. For now, enjoy watching!
+            </p>
+
+            {/* Old quiz UI temporarily muted */}
+            {false && (
+              <>
+                <p className="text-sm text-gray-700 mb-2">What message did the film convey?</p>
+                <textarea
+                  value={filmAnswer}
+                  onChange={(e) => setFilmAnswer(e.target.value)}
+                  className="w-full border rounded p-2 text-sm text-black"
+                  rows={3}
+                  placeholder="Your answer..."
+                />
+                <button
+                  onClick={() => handleAnswer('film')}
+                  className="px-4 py-2 bg-[#915C48] text-white rounded hover:bg-[#7a4d3d]"
+                >
+                  Submit Answer
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
 
-      {/* Book Question Popup */}
+      {/* Book Popup */}
       {showBookPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-[#FCFAF6] border border-[#D6C9B4] rounded-lg p-6 space-y-4 w-80 text-center shadow-lg relative">
@@ -153,21 +162,30 @@ export default function Motivation() {
             >
               ×
             </button>
-            <h2 className="text-md font-semibold text-[#915C48]">📖 Quiz: {book.title}</h2>
-            <p className="text-sm text-gray-700 mb-2">What did you learn from this book?</p>
-            <textarea
-              value={bookAnswer}
-              onChange={(e) => setBookAnswer(e.target.value)}
-              className="w-full border rounded p-2 text-sm text-black"
-              rows={3}
-              placeholder="Your answer..."
-            />
-            <button
-              onClick={() => handleAnswer('book')}
-              className="px-4 py-2 bg-[#915C48] text-white rounded hover:bg-[#7a4d3d]"
-            >
-              Submit Answer
-            </button>
+            <h2 className="text-md font-semibold text-[#915C48]">📖 {book.title}</h2>
+            <p className="text-sm text-gray-700">
+              Soon you’ll be able to earn bonus points here. For now, enjoy reading!
+            </p>
+
+            {/* Old quiz UI temporarily muted */}
+            {false && (
+              <>
+                <p className="text-sm text-gray-700 mb-2">What did you learn from this book?</p>
+                <textarea
+                  value={bookAnswer}
+                  onChange={(e) => setBookAnswer(e.target.value)}
+                  className="w-full border rounded p-2 text-sm text-black"
+                  rows={3}
+                  placeholder="Your answer..."
+                />
+                <button
+                  onClick={() => handleAnswer('book')}
+                  className="px-4 py-2 bg-[#915C48] text-white rounded hover:bg-[#7a4d3d]"
+                >
+                  Submit Answer
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
