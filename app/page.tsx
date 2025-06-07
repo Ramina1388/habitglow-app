@@ -7,12 +7,12 @@ import { quotes } from '@/lib/quotes';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const moodColors = [
-  { color: '#FFD700', label: 'Joy' },
-  { color: '#1E90FF', label: 'Sadness' },
-  { color: '#DC143C', label: 'Anger' },
-  { color: '#32CD32', label: 'Balance' },
-  { color: '#8A2BE2', label: 'Inspiration' },
-  { color: '#FFA500', label: 'Motivation' },
+  { color: '#FAE588ч', label: 'Joy' },
+  { color: '#A2C4EC', label: 'Sadness' },
+  { color: '#F4A6A6', label: 'Anger' },
+  { color: '#B8E2B3', label: 'Balance' },
+  { color: '#CAB4E9', label: 'Inspiration' },
+  { color: '#FFD6A5', label: 'Motivation' },
 ];
 
 export default function Home() {
