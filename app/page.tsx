@@ -213,7 +213,7 @@ export default function Home() {
               style={{
                 backgroundColor: color,
                 opacity: selectedColor && selectedColor !== color ? 0.3 : 1,
-                borderColor: selectedColor === color ? 'black' : 'transparent',
+                borderColor: selectedColor === color ? '#444444' : 'transparent',
               }}
             />
           ))}
