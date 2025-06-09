@@ -212,7 +212,7 @@ export default function Home() {
               className="w-16 h-16 rounded-full shadow-md cursor-pointer border-2"
               style={{
                 backgroundColor: color,
-                opacity: selectedColor && selectedColor !== color ? 0.3 : 1,
+                opacity: selectedColor === '' || selectedColor === color ? 1 : 0.3,
                 borderColor: selectedColor === color ? '#59564f' : 'transparent',
               }}
             />
