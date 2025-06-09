@@ -61,10 +61,22 @@ export default function Home() {
     const lastDate = localStorage.getItem('lastCheckinDate');
     const storedMood = localStorage.getItem('moodColor') || '';
     const moodTimestamp = parseInt(localStorage.getItem('moodTimestamp') || '0', 10);
-    const today = new Date().toISOString().slice(0, 10);
 
-    if (lastDate === today) setCheckedToday(true);
-    setStreak(storedStreak);
+    const today = new Date();
+    const todayStr = today.toISOString().slice(0, 10);
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+    // ✅ reset streak if skipped a day
+    let finalStreak = storedStreak;
+    if (lastDate && lastDate !== todayStr && lastDate !== yesterdayStr) {
+      finalStreak = 0;
+      localStorage.setItem('streakCount', '0');
+    }
+
+    if (lastDate === todayStr) setCheckedToday(true);
+    setStreak(finalStreak);
     setPoints(storedPoints);
     setSelectedColor(storedMood);
 
@@ -212,7 +224,7 @@ export default function Home() {
               className="w-16 h-16 rounded-full shadow-md cursor-pointer border-2"
               style={{
                 backgroundColor: color,
-                opacity: selectedColor === '' || selectedColor === color ? 1 : 0.3,
+                opacity: timeLeft > 0 && selectedColor !== color ? 0.3 : 1,
                 borderColor: selectedColor === color ? '#59564f' : 'transparent',
               }}
             />
