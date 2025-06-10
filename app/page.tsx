@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { sdk } from '@farcaster/frame-sdk';
 import TabBar from '@/components/TabBar';
 import { quotes } from '@/lib/quotes';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const moodColors = [
   { color: '#F9E79F', label: 'Joy' },
@@ -178,7 +177,7 @@ export default function Home() {
 
   return (
     <>
-      {/* 🔐 Sign-in button for Farcaster wallet */}
+      {/* Sign in with Farcaster */}
       <div className="p-6 text-center">
         <button
           onClick={() => sdk.actions.signIn({ nonce: Date.now().toString() })}
@@ -262,14 +261,6 @@ export default function Home() {
               <li className="text-center text-gray-500">No data yet</li>
             )}
           </ul>
-        </div>
-
-        <div className="hidden">
-          <ConnectButton
-            showBalance={false}
-            accountStatus="address"
-            chainStatus="icon"
-          />
         </div>
       </main>
 
