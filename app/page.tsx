@@ -108,6 +108,13 @@ export default function Home() {
     fetchTopHabits();
     sdk.actions.ready();
 
+    // ✅ Автоавторизация, если нет fid
+    const frameContext = (window as any)?.frame?.context;
+    const fid = frameContext?.user?.fid;
+    if (!fid) {
+      sdk.actions.signIn({ nonce: Date.now().toString() });
+    }
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -177,16 +184,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Sign in with Farcaster */}
-      <div className="p-6 text-center">
-        <button
-          onClick={() => sdk.actions.signIn({ nonce: Date.now().toString() })}
-          className="px-4 py-2 bg-[#6A7A52] text-white rounded hover:bg-[#4F5F3A] mx-auto"
-        >
-          Sign in with Farcaster
-        </button>
-      </div>
-
       <main className="p-4 pb-32 max-w-md mx-auto bg-[#ECE4D9] min-h-screen">
         <section className="bg-white rounded-xl shadow-md p-4 mb-4">
           <p className="text-base font-semibold text-[#553414] text-center italic leading-relaxed">
