@@ -1,4 +1,3 @@
-// ✅ app/providers.tsx
 "use client";
 
 import { ReactNode } from "react";
@@ -12,6 +11,7 @@ import {
   RainbowKitProvider,
   getDefaultWallets,
 } from "@rainbow-me/rainbowkit";
+import { MiniKitProvider } from "@coinbase/onchainkit/minikit";
 import "@rainbow-me/rainbowkit/styles.css";
 
 const base = {
@@ -55,8 +55,12 @@ const wagmiClient = createClient({
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
-    </WagmiConfig>
+    <MiniKitProvider chain={base}>
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains}>
+          {children}
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </MiniKitProvider>
   );
 }

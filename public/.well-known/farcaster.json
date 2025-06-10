@@ -12,9 +12,13 @@
     "imageUrl": "https://habitglow-app.vercel.app/preview.png",
     "buttonTitle": "Start your glow",
     "splashImageUrl": "https://habitglow-app.vercel.app/icon.png",
+    "heroImageUrl": "https://habitglow-app.vercel.app/hero.png",
     "splashBackgroundColor": "#ECE4D9",
     "webhookUrl": "https://api.neynar.com/f/app/0410e97e-3870-4339-8166-8e655a0a50c0/event",
     "permissions": ["read", "write", "username", "avatar"],
+    "primaryCategory": "productivity",
+    "tags": ["habit", "tracker", "web3", "motivation", "wellness"],
+    "requiredCapabilities": ["actions.signIn"],
     "developer": {
       "name": "Marina Yakovleva",
       "url": "https://github.com/Ramina1388"

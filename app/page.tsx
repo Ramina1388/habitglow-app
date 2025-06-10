@@ -68,7 +68,6 @@ export default function Home() {
     yesterday.setDate(today.getDate() - 1);
     const yesterdayStr = yesterday.toISOString().slice(0, 10);
 
-    // ✅ reset streak if skipped a day
     let finalStreak = storedStreak;
     if (lastDate && lastDate !== todayStr && lastDate !== yesterdayStr) {
       finalStreak = 0;
@@ -179,6 +178,16 @@ export default function Home() {
 
   return (
     <>
+      {/* 🔐 Sign-in button for Farcaster wallet */}
+      <div className="p-6 text-center">
+        <button
+          onClick={() => sdk.actions.signIn({ nonce: Date.now().toString() })}
+          className="px-4 py-2 bg-[#6A7A52] text-white rounded hover:bg-[#4F5F3A] mx-auto"
+        >
+          Sign in with Farcaster
+        </button>
+      </div>
+
       <main className="p-4 pb-32 max-w-md mx-auto bg-[#ECE4D9] min-h-screen">
         <section className="bg-white rounded-xl shadow-md p-4 mb-4">
           <p className="text-base font-semibold text-[#553414] text-center italic leading-relaxed">
