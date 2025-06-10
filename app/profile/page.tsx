@@ -5,6 +5,7 @@ import { useAccount } from 'wagmi';
 import Image from 'next/image';
 import Link from 'next/link';
 import TabBar from '@/components/TabBar';
+import { sdk } from '@farcaster/frame-sdk';
 
 const fallbackAvatar = 'https://i.pravatar.cc/200';
 
@@ -21,6 +22,7 @@ const moodLabels: Record<string, string> = {
 export default function Profile() {
   const { address } = useAccount();
   const [pfp, setPfp] = useState(fallbackAvatar);
+  const [fcUsername, setFcUsername] = useState<string | undefined>(undefined);
   const [moodColor, setMoodColor] = useState('#00BFFF');
   const [showPopup, setShowPopup] = useState(false);
   const [streak, setStreak] = useState(0);
@@ -32,9 +34,6 @@ export default function Profile() {
   useEffect(() => {
     const storedMood = localStorage.getItem('moodColor');
     if (storedMood) setMoodColor(storedMood);
-
-    const storedPfp = localStorage.getItem('farcasterPfp');
-    if (storedPfp) setPfp(storedPfp);
 
     const storedStreak = parseInt(localStorage.getItem('streakCount') || '0', 10);
     const storedPoints = parseInt(localStorage.getItem('habitPoints') || '0', 10);
@@ -55,6 +54,24 @@ export default function Profile() {
     if (storedCalendar) {
       setCalendarData(JSON.parse(storedCalendar));
     }
+
+    const init = async () => {
+      try {
+        const context = await sdk.context;
+        const user = context.user;
+        if (user) {
+          if (user.pfpUrl) {
+            setPfp(user.pfpUrl);
+            localStorage.setItem('farcasterPfp', user.pfpUrl);
+          }
+          if (user.username) setFcUsername(user.username);
+        }
+      } catch (err) {
+        console.error('Error fetching Farcaster user:', err);
+      }
+    };
+
+    init();
   }, []);
 
   const postText = `My mood today: ${moodLabels[moodColor] || 'Calm'} 💙%0AJoin me and track your habits: ${referralLink}`;
@@ -138,7 +155,14 @@ export default function Profile() {
             className="rounded-full relative z-10 border-4 border-white shadow-md cursor-pointer"
           />
         </div>
-        <p className="text-sm font-semibold" style={{ color: moodColor }}>Your mood: {moodLabels[moodColor] || 'Calm'}</p>
+
+        {fcUsername && (
+          <p className="text-lg font-bold">@{fcUsername}</p>
+        )}
+
+        <p className="text-sm font-semibold" style={{ color: moodColor }}>
+          Your mood: {moodLabels[moodColor] || 'Calm'}
+        </p>
 
         <div className="flex justify-around text-sm font-semibold text-white">
           <div>
